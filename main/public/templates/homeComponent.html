@@ -1,0 +1,18 @@
+	<div class="container">
+		<div class="row header a-head-title">
+			<div class="col-md-2">COVER STORIES</div>
+			<div class="col-md-8 fade-font" ng-click="homeComponent.openPreferenceModal()">CHOOSE YOUR PREFERENCES</div>
+			<div class="col-md-2" style="color:#df252c" >Sign In</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3 news-width" ng-repeat="article in homeComponent.articles track by $index"">
+				<a ng-href="/story/{{article._id}}/">
+					<div>
+						<div><img ng-src="{{article.lead_image_url}}" style="width: 100%" /></div>
+						<div ng-bind="article.title" class="article-title"></div>
+						<div ng-bind="article.excerpt" class="excerpt-text"></div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>

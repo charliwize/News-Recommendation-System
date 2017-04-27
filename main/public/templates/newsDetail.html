@@ -1,0 +1,20 @@
+<div class="container site-text">
+	<div class="row">
+		<div class="col-md-8" >
+			<div class="header-div">
+				<div class="heading-titles">story</div>
+			</div>
+			<div class="site-text-header" ng-bind-html="newsDetail.article.title"></div>
+			<div class="site-text-excerpt" ng-bind-html="newsDetail.article.excerpt"></div>
+			<div><span class="category" ng-if="category != ''" ng-repeat="category in newsDetail.categories track by $index">{{category}}</span></div>
+			<div style="margin-top: 15px; margin-bottom: 15px"><img ng-src="{{newsDetail.article.lead_image_url}}" style="width: 100%" /></div>
+			<div class="text-body" ng-bind-html="newsDetail.article.content"></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-9" style="text-align: center;">
+			<div><span>Rate this story</span></div>
+			<uib-rating ng-model="newsDetail.rate" max="newsDetail.max" read-only="newsDetail.isReadonly" ng-click = newsDetail.clickOn(newsDetail.overStar); on-hover="newsDetail.hoveringOver(value)" on-leave="newsDetail.overStar = null" titles="['1','2','3']" aria-labelledby="default-rating"></uib-rating>
+		</div>
+	</div>
+</div>

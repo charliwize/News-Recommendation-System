@@ -1,0 +1,134 @@
+body{
+	margin-bottom: 150px
+}
+.article-title{
+	font-weight: 600; 
+	margin-bottom: 10px; 
+	height: 80px;
+	overflow: hidden;
+}
+.ngdialog-content{
+	width: 850px !important;
+}
+.excerpt-text{
+	font-family: Georgia,serif; 
+	font-size: 15px;
+}
+.site-text{
+	font-family: Georgia,serif; 
+}
+.heading-titles{
+	color: #fff;
+}
+.site-text-header{
+	color: #005689;
+	font-weight: 400;
+	padding-top: 0.375rem;
+    padding-bottom: 2.25rem;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+}
+.site-text-excerpt{
+	font-size: 15px;
+	margin: 20px 0px 20px 0px;
+}
+.header-div{
+	height: 40px;
+	padding: 5px;
+	width: 100%;
+	background: #005689;
+}
+.text-body{
+	border-bottom: 10px #005689 solid;
+	margin-bottom: 15px;
+	font-size: 1.1em;
+	color: #333;
+}
+.site-text img{
+	width: 100%
+}
+figcaption{
+	font-size: 11px
+}
+.container{
+	width: 80%;
+	margin-top: 150px;
+}
+.header{
+	margin-bottom: 15px;
+	border-bottom: 1px solid #ccc;
+	padding: 10px
+}
+
+.news-width{
+	max-width: 22%;
+	margin: 10px;
+	height: 330px;
+    overflow: hidden;
+}
+.a-head-title{
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+.fade-font{
+	color: #ccc;
+}
+.ngdialog.ngdialog-theme-default .ngdialog-content{
+	border-radius: 0px;
+	background: #fff;
+}
+.news-body{
+
+}
+.fine-tune-pref{
+	border: none;
+    background-color: #f7f7f7;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #999999;
+    letter-spacing: 1px;
+    font-size: 14px;
+    padding: 0 10px;
+    font-family: 'Open Sans Condensed', sans-serif;
+    display: inline-block;
+}
+.active{
+	background: #e12828;
+	color:#fff;
+}
+.inactive{
+	background-color: #f7f7f7 !important;
+}
+.existing{
+	background: #e12828 !important;
+	color:#fff;
+}
+.textarea{
+	margin-bottom: 15px;
+}
+.topicSelect{
+	margin: auto;
+	width: auto;
+    text-align: center;
+}
+a{
+	text-decoration: none;
+	color: #333
+}
+a:hover{
+	text-decoration: none;
+	color: #333;
+}
+.glyphicon-star, .glyphicon-star-empty{
+	color: gold;
+	font-size: 30px
+}
+.category{
+	color: #fff;
+    background: #666;
+    margin: 3px;
+    padding: 3px 6px 3px 6px;
+    display: inline-block;
+    position: relative;
+    /* padding-right: 6px; */
+}
