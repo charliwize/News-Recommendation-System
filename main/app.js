@@ -108,7 +108,7 @@ app.post('/userpref', function(req, res, next){
 		var postProfile = new PostProfile.Post({
 			username: req.body.username,
 			email: req.body.email,
-			topic: req.body.taxanomy,
+			topic: req.body.topic,
 			profession: req.body.profession
 		})
 
@@ -137,11 +137,12 @@ app.get('/users', function(req, res){
 
 app.put('/userpref', function(req, res, next){
 	if(req){
-		PostProfile.Post.findById(req.body.id, function(err, item) {
+		console.log(req)
+		PostProfile.Post.findById(req.body._id, function(err, item) {
 		    if(item){
 		    	item.username = req.body.username || item.username;
 		        item.email = req.body.email  || item.email;
-		        item.topic = req.body.taxanomy || item.topic;
+		        item.topic = req.body.topic || item.topic;
 		        item.profession = req.body.profession || item.profession;
 		        item.save(function(err, saved){
 		        	if(saved){
@@ -161,17 +162,15 @@ app.get('/api/:id', function(req, res){
 
 
 app.put('/ratedstories', function(req, res, next){
-	PostProfile.Ratings.findOne({username: req.body.username}, function(err, item) {
+	PostProfile.Ratings.findOne({title: req.body.title}, function(err, item) {
 		if(item){
-			if(item.title == req.body.title){
-							console.log(item)
-
+			if(item.email == req.body.email){
 	        	item.rating =  req.body.rating;
 	        	item.save(function(err, saved){
-	        	if(saved){
-	        		res.send(item);
-	        	}
-	        })
+		        	if(err){
+		        		console.log("ERROR")
+		        	}
+	        	})
 	    	}
 	    	else{
 		    	var postProfile = new PostProfile.Ratings({
@@ -181,6 +180,7 @@ app.put('/ratedstories', function(req, res, next){
 					url: req.body.url,
 					rating: req.body.rating
 				})
+				postProfile.save()
 	    	}
 	    	
 		}
@@ -192,6 +192,13 @@ app.put('/ratedstories', function(req, res, next){
 				url: req.body.url,
 				rating: req.body.rating
 			})
+			postProfile.save()
 	    }
 	});
 }); 
+
+app.get('/ratedstories', function(req, res){
+	PostProfile.Ratings.findOne({title: req.query.title}, function(err, item) {
+		res.send(item)
+	})
+})

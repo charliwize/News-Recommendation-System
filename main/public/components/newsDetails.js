@@ -12,25 +12,40 @@ function newsDetailController($http, ngDialog, $scope, $routeParams){
 		"username": "Victor Nice",
 		"email": "victor@gmail.com",
 	};
+
+	ctrl.$onInit = function(){
+		$http.get('http://localhost:3002/api/' + $routeParams.id).success(function(data){
+			ctrl.categories = [];
+			angular.forEach(data.category[0].categories, function(category){
+				if(category.score >= 0.45){
+					var items = category.label.split('/')
+					angular.forEach(items, function(item){
+						ctrl.categories.push(item)
+					})
+				}
+			})
+			ctrl.article = data
+			console.log(ctrl.article)
+			$http({
+			    url: 'http://localhost:3002/ratedstories/', 
+			    method: "GET",
+			    params: {username: ctrl.currentUser.username, title: ctrl.article.title},
+			    headers : {'Accept' : 'application/json'}
+			}).success(function(data){
+				console.log(data)
+				ctrl.rate = data.rating;
+			});
+		})
+
+		
+	}
 	ctrl.rate = 0;
   	ctrl.max = 5;
   	ctrl.isReadonly = false;
 
   	
 
-	$http.get('http://localhost:3002/api/' + $routeParams.id).success(function(data){
-		ctrl.categories = [];
-		console.log(data)
-		angular.forEach(data.category[0].categories, function(category){
-			if(category.score >= 0.45){
-				var items = category.label.split('/')
-				angular.forEach(items, function(item){
-					ctrl.categories.push(item)
-				})
-			}
-		})
-		ctrl.article = data
-	})
+	
 
 	ctrl.hoveringOver = function(value) {
     	ctrl.overStar = value;

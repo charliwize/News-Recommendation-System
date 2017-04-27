@@ -8,7 +8,6 @@ var Post = db.model('userProfile', {
 	profession: {type: String}
 })
 
-module.exports = Post
 
 var News = db.model('aggregateNews', {
 	title: {type: String, required: true},
