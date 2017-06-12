@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h4 class="modal-title">PERSONALIZE YOUR PREFERENCES</h4>
+</div>
+<div class="modal-body">
+	<div>
+		<textarea name="" ng-model="userProfession" class="form-control textarea" placeholder="What is your profession? - e.g: I am a nutritionist" maxlength="50"></textarea>
+	</div>
+	<div class="topicSelect">
+		<span ng-repeat="preferenceList in preferenceLists track by $index" class="fine-tune-pref" ng-click="addItem(preferenceList); item.isActive = !item.isActive" ng-class="{'active': item.isActive && userTopics.indexOf(preferenceList) !== -1, 'existing': userTopics.indexOf(preferenceList) !== -1}">{{preferenceList}}</span>
+	</div>
+</div>
+<div class="modal-footer">
+<button ng-click = "submitPreferences(); closeThisDialog()" class="btn">Save</button>
+</div>
+  

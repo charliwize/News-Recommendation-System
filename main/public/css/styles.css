@@ -52,7 +52,6 @@ figcaption{
 }
 .container{
 	width: 80%;
-	margin-top: 150px;
 }
 .header{
 	margin-bottom: 15px;
@@ -61,16 +60,25 @@ figcaption{
 }
 
 .news-width{
-	max-width: 22%;
-	margin: 10px;
+	margin-bottom: 20px;
 	height: 330px;
     overflow: hidden;
 }
 .a-head-title{
-	font-family: 'Open Sans Condensed', sans-serif;
+    background: rgba(13, 79, 111, 0.87);
+    color: #fff;
+    padding: 0px 70px 0px 70px;
+    height: 40px
+}
+.a-head-title a{
+	color: #fff
+}
+.header-item{
+	padding-top:10px;
 }
 .fade-font{
 	color: #ccc;
+	height: 100%;
 }
 .ngdialog.ngdialog-theme-default .ngdialog-content{
 	border-radius: 0px;
@@ -131,4 +139,27 @@ a:hover{
     display: inline-block;
     position: relative;
     /* padding-right: 6px; */
+}
+.loginForm {
+	width: 40%;
+	margin: auto;
+	padding: 35px;
+    border-top: 6px solid #e12828;
+}
+.loginFormInner{
+	margin-top: 20px;
+    margin-bottom: 28px;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    border-bottom: 5px rgba(0, 0, 0, 0.45) solid;
+}
+button{
+	background: rgba(225, 40, 40, 0.69);
+    color: #fff;
+    border: none;
+    border-radius: 0px;
+    padding: 7px;
 }

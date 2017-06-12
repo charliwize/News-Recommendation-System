@@ -4,7 +4,8 @@ var Post = db.model('userProfile', {
 	username: {type: String, required: true},
 	email: {type: String, required: true},
 	date: {type: Date, required: true, default: Date.now},
-	topic: {type: String, required: true},
+	topic: {type: Array, required: false},
+	password: {type: String, required: true},
 	profession: {type: String}
 })
 

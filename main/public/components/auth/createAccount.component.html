@@ -1,0 +1,24 @@
+<div class="container">
+	<div style="width: 40%; margin: auto"><h2>Create Account</h2></div>
+	<div class="row loginForm">
+		<div class="loginFormInner">
+			<div class="form-group">
+				<label for="email">Email: </label>
+				<input type="text" name="" class="form-control" name="email" placeholder="email" ng-model="$ctrl.email">
+			</div>
+			<div class="form-group">
+				<label for="username">Username: </label>
+				<input type="text" name="" class="form-control" name="username" placeholder="username" ng-model="$ctrl.username">
+			</div>
+			<div class="form-group"> 
+				<label for="password">Password: </label>
+				<input type="password" name="" class="form-control" name="password" placeholder="password" ng-model="$ctrl.password">
+			</div>
+		</div>
+		<div class="pull-right orm-group">
+			<button ng-click="$ctrl.create()">Create Account!</button>
+			<span>Or</span>
+			<a href="/login"><button>Login!</button></a>
+		</div>
+	</div>
+</div>
