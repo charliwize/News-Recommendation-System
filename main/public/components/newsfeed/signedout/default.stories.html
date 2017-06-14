@@ -1,9 +1,0 @@
-	<div class="col-xs-3 news-width" ng-repeat="article in $ctrl.articles track by $index"">
-		<a ng-href="/story/{{article._id}}/">
-			<div style="max-height: 170px">
-				<img ng-src="{{article.lead_image_url}}" style="width: 100%; height:140px" />
-			</div>
-			<div ng-bind="article.title" class="article-title"></div>
-			<div ng-bind="article.excerpt" class="excerpt-text"></div>
-		</a>
-	</div>

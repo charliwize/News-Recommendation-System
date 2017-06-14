@@ -40,8 +40,17 @@ app.get('/create', function(req, res, next) {
     res.sendFile(path.join(__dirname + '/public/index.html'))
 });
 var api = [
-	'http://api.nytimes.com/svc/search/v2/articlesearch.json?sort=newest&api-key=a572b583bb1fa33208dd6f68b9e19373:16:75164318',
-	'https://content.guardianapis.com/search?page-size=3&api-key=4fdb8f1f-0206-4dd8-909d-339f8fd8c06a'
+	'https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=entertainment-weekly&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=the-lad-bible&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=national-geographic&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=recode&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=the-economist&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=espn&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=cnn&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=al-jazeera-english&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=independent&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe'
 ] 
 getStories.makeAPIRequest(api, function(response){
     response.forEach(function(item){
@@ -52,7 +61,7 @@ getStories.makeAPIRequest(api, function(response){
     	}
     	mc.parse(item.url)
 		.then(function(data){
-			if(data.content !== 'undefined'){
+			if(data.content !== 'undefined' || data.content !== '' || data.content !== null){
 					var parameters = {
 					'html': data.content,
 				  	'features': {
@@ -68,32 +77,32 @@ getStories.makeAPIRequest(api, function(response){
 						})
 					}			  
 					else{
-						natural_language_understanding.analyze(parameters, function(err, response) {
-						  	if (err){
-						    	console.log('error:', err);
-						  	}
-						  	else{
-						    	var newNews = new PostProfile.News({
-						    		title: data.title,
-									content: data.content,
-									date_published: data.date_published,
-									lead_image_url: data.lead_image_url,
-									domain: data.domain,
-									url: data.url,
-									excerpt: data.excerpt,
-									category: response.categories[0]
-						    	})
-								newNews.save(function(err, post){
-						    		if(err){ 
-										Object.keys(err.errors).forEach(function(key) {
-											var message = err.errors[key].message;
-											console.log('Validation error for "%s": %s', key, message);
-										});
-									}
-									else if(post){}
-						    	})
-						    }
-						});
+						// natural_language_understanding.analyze(parameters, function(err, response) {
+						//   	if (err){
+						//     	console.log('error:', err);
+						//   	}
+						//   	else{
+						//     	var newNews = new PostProfile.News({
+						//     		title: data.title,
+						// 			content: data.content,
+						// 			date_published: data.date_published,
+						// 			lead_image_url: data.lead_image_url,
+						// 			domain: data.domain,
+						// 			url: data.url,
+						// 			excerpt: data.excerpt,
+						// 			category: response.categories[0]
+						//     	})
+						// 		newNews.save(function(err, post){
+						//     		if(err){ 
+						// 				Object.keys(err.errors).forEach(function(key) {
+						// 					var message = err.errors[key].message;
+						// 					console.log('Validation error for "%s": %s', key, message);
+						// 				});
+						// 			}
+						// 			else if(post){}
+						//     	})
+						//     }
+						// });
 					} 
 				});
 			}
@@ -187,7 +196,7 @@ app.get('/api/:id', function(req, res){
 
 
 app.put('/ratedstories', function(req, res, next){
-	PostProfile.Ratings.findOne({title: req.body.title}, function(err, item) {
+	PostProfile.Ratings.findOne({email: req.body.email, title: req.body.title}, function(err, item) {
 		if(item){
 			if(item.email == req.body.email){
 	        	item.rating =  req.body.rating;
@@ -199,7 +208,6 @@ app.put('/ratedstories', function(req, res, next){
 	    	}
 	    	else{
 		    	var postProfile = new PostProfile.Ratings({
-					username: req.body.username,
 					email: req.body.email,
 					title: req.body.title,
 					url: req.body.url,
@@ -223,7 +231,7 @@ app.put('/ratedstories', function(req, res, next){
 }); 
 
 app.get('/ratedstories', function(req, res){
-	PostProfile.Ratings.findOne({title: req.query.title}, function(err, item) {
+	PostProfile.Ratings.findOne({email: req.query.email, title: req.query.title}, function(err, item) {
 		res.send(item)
 	})
 })

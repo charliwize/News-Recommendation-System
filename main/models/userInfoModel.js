@@ -11,10 +11,10 @@ var Post = db.model('userProfile', {
 
 
 var News = db.model('aggregateNews', {
-	title: {type: String, required: true},
+	title: {type: String, required: false},
 	content: {type: String, required: true},
-	date_published: {type: Date, required: true, default: Date.now},
-	lead_image_url: {type: String, required: true},
+	date_published: {type: Date, required: false, default: Date.now},
+	lead_image_url: {type: String, required: false},
 	domain: {type: String},
 	url: {type: String},
 	excerpt: {type: String},
@@ -22,7 +22,6 @@ var News = db.model('aggregateNews', {
 })
 
 var Ratings = db.model('ratedItems', {
-	username: {type: String, required: true},
 	email: {type: String, required: true},
 	title: {type: String, required: true},
 	url: {type: String},

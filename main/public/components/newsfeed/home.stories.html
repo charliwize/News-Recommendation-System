@@ -1,18 +1,5 @@
-<div class="row header a-head-title">
-	<div class="col-md-4"  style="height: 100%">
-		<div class="row"  style="height: 100%">
-			<div class="col-md-4 header-item" style="height: 100%; background: rgba(169, 68, 66, 0.9);">COVER STORIES</div>
-			<div  class="fade-font col-md-8 header-item">
-				<a href="" ng-click="$ctrl.openPreferenceModal()" ng-if = "$ctrl.user"><div  style="height: 100%" >Choose your Preferences</div></a>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-8 header-item" style="text-align: right">
-		<div style="color:#df252c" ng-if = "$ctrl.user"><a href="/login">Sign Out</a></div>
-		<div style="color:#df252c" ng-if = "!$ctrl.user"><a href="/login">Sign In</a></div>
-	</div>
-</div>
+<header user='$ctrl.user' config='$ctrl.config'></header>
 <div class="container">
-		<default-stories articles='$ctrl.articles' ng-if = "!$ctrl.user"></default-stories>
-		<recommeded-stories articles='$ctrl.articles' ng-if = "$ctrl.user"></recommeded-stories>
+	<default-stories  user='$ctrl.user' config='$ctrl.config' ng-if = "!$ctrl.user"></default-stories>
+	<recommended-stories user='$ctrl.user' config='$ctrl.config' ng-if = "$ctrl.user"></recommended-stories>
 </div>

@@ -41,14 +41,17 @@ body{
 .text-body{
 	border-bottom: 10px #005689 solid;
 	margin-bottom: 15px;
-	font-size: 1.1em;
+	font-size: 1.3em;
 	color: #333;
+}
+.text-body figure{
+	margin-bottom: 40px;
 }
 .site-text img{
 	width: 100%
 }
 figcaption{
-	font-size: 11px
+	font-size: 13px
 }
 .container{
 	width: 80%;

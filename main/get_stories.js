@@ -8,12 +8,7 @@ module.exports = {
 		urls.forEach(function(url) {
 			return request(url, function(error, response, body){
 				let result = JSON.parse(body)
-				if(result.response.results){ // the guardian
-					return callback(result.response.results)
-				}
-				else {
-					return callback(result.response.docs)
-				}
+				return callback(result.articles)
 			})
 		})
 	}
