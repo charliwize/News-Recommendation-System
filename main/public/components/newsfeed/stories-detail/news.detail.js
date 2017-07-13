@@ -30,7 +30,6 @@ function newsDetailController($http, ngDialog, $scope, $routeParams, siteService
 			    params: {email: ctrl.currentUser.email, title: ctrl.article.title},
 			    headers : {'Accept' : 'application/json'}
 			}).success(function(data){
-				console.log(data)
 				ctrl.rate = data.rating;
 			});
 		})

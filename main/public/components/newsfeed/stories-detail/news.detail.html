@@ -14,8 +14,8 @@
 	</div>
 	<div class="row" ng-if="$ctrl.user">
 		<div class="col-md-9" style="text-align: center;">
-			<div><span>Rate this story</span></div>
-			<uib-rating ng-model="newsDetail.rate" max="newsDetail.max" read-only="newsDetail.isReadonly" ng-click = newsDetail.clickOn(newsDetail.overStar); on-hover="newsDetail.hoveringOver(value)" on-leave="newsDetail.overStar = null" titles="['1','2','3']" aria-labelledby="default-rating"></uib-rating>
+			<div><span>How relevant is this story?</span></div>
+			<uib-rating ng-model="newsDetail.rate" max="newsDetail.max" read-only="newsDetail.isReadonly" ng-click = newsDetail.clickOn(newsDetail.overStar); on-hover="newsDetail.hoveringOver(value)" on-leave="newsDetail.overStar = null" titles="['No Relevance','Some Relevance','Relevance', 'More Relevance', 'Highly Relevant']" aria-labelledby="default-rating"></uib-rating>
 		</div>
 	</div>
 </div>

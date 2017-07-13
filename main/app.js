@@ -9,6 +9,7 @@ var MercuryClient = require('mercury-client');
 var serveStatic = require('serve-static');
 var path = require('path')
 var app = express()
+var stringSimilarity = require('string-similarity')
 app.listen(8081, function(){
 	console.log("started...", 8081)
 })
@@ -21,7 +22,6 @@ var mc = new MercuryClient('6QuS6lTQWpbFN4bqVDpuHOzyUmI1zNghF4K5Rqmb');
 const getStories = require('./get_stories')
 const natural_language_understanding = require('./watson-request/watson-request.js')
 app.use(express.static(__dirname + '/public'))
-// app.use("/*", express.static("./public"));
 app.get('/', function(req, res, next) {
     // Just send the index.html for other files to support HTML5Mode
     res.sendFile(path.join(__dirname + '/public/index.html'))
@@ -110,6 +110,9 @@ getStories.makeAPIRequest(api, function(response){
 			
 			// fs.writeFile('/public/json.json', json, 'utf8', function(){})
 		})
+		.catch(function () {
+		     console.log("Error: mercury.postlight.com mercury.postlight.com");
+		});
 	})
 })
 
@@ -142,12 +145,16 @@ app.post('/userpref', function(req, res, next){
 	}
 	
 })
+//get current user based on email and password
 app.get('/users', function(req, res){
 	PostProfile.Post.findOne({email: req.query.email, password: req.query.password}, function(err, item) {
 		res.send(item)
 	})
 })
-
+/*
+handles new user signup functionlity and saves 
+new user information in Post table
+*/
 app.post('/users', function(req, res, next){
 	if(req){
 		var newUser = new PostProfile.Post({
@@ -169,7 +176,10 @@ app.post('/users', function(req, res, next){
 		})
 	}
 })
-
+/*
+User selects their profeerences, 
+** handles and saves user preferences in preference table
+*/
 app.put('/userpref', function(req, res, next){
 	if(req){
 		PostProfile.Post.findById(req.body._id, function(err, item) {
@@ -234,4 +244,11 @@ app.get('/ratedstories', function(req, res){
 	PostProfile.Ratings.findOne({email: req.query.email, title: req.query.title}, function(err, item) {
 		res.send(item)
 	})
+})
+app.get('/similarusers', function(req, res){
+	console.log(req.query)
+	mongoose.model('userProfile').find(function(err, users){
+		console.log(users)
+	})
+	res.send('getting users ...')
 })

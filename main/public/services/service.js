@@ -6,6 +6,11 @@ angular.module('showstories')
 		},
 		getNews: function(obj){
 			return $http.get('http://localhost:8081/newsapi', obj).then(function(news){ return news })
+		},
+		getSimilarUser: function(obj){
+			return $http.get('http://localhost:8081/similarusers', obj).then(function(similarusers){
+				return similarusers
+			})
 		}
 	}
 })

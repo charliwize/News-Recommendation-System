@@ -19,6 +19,8 @@
     "string-similarity": "^1.2.0"
   },
   "devDependencies": {
-    "ng-dialog": "^1.0.1"
+    "browserify": "^14.4.0",
+    "ng-dialog": "^1.0.1",
+    "string-similarity": "^1.2.0"
   }
 }
