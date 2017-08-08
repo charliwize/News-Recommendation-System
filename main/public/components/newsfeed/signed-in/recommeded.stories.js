@@ -8,7 +8,7 @@ angular.module('showstories')
 	}
 })
 
-function RecommendedStories (siteService) {
+function RecommendedStories (siteService, $http) {
 	var getParams = {
 		params: "",
 		headers: {'Accept' : 'application/json'}
@@ -26,12 +26,25 @@ function RecommendedStories (siteService) {
 		var userPreferences = new Object()
 		siteService.getUser(ctrl.config)
 		.then(function(respUser){ 
-			userPreferences.topic = respUser.data.topic.toString()
+			userPreferences.topic = respUser.data.topic
 			getParams.params = userPreferences
 			siteService.getSimilarUser(getParams)
 			.then(function(response){
-				console.log(ctrl.config)
-				console.log(getParams)
+				var similarUsers = response.data.filter(function (similarUser) {
+					return similarUser.email !== respUser.data.email
+				})
+				return similarUsers
+			})
+			.then(function(nearestNeighbour){
+				console.log(nearestNeighbour)
+				$http({
+					url: 'http://localhost:8081/ratedstories/', 
+					method: "GET",
+					headers : {'Accept' : 'application/json'}
+				}).success(function(ratedItems){
+
+					console.log(ratedItems)
+				});
 			})
 		})
 	}

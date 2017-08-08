@@ -39,7 +39,8 @@ function newsDetailController($http, ngDialog, $scope, $routeParams, siteService
   	ctrl.isReadonly = false;
 
 	ctrl.hoveringOver = function(value) {
-    	ctrl.overStar = value;
+    	ctrl.overStar = value
+		console.log(ctrl.overStar)
     	ctrl.percent = 100 * (value / ctrl.max);
   	};
   	ctrl.clickOn = function(value){

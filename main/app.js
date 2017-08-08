@@ -241,14 +241,65 @@ app.put('/ratedstories', function(req, res, next){
 }); 
 
 app.get('/ratedstories', function(req, res){
-	PostProfile.Ratings.findOne({email: req.query.email, title: req.query.title}, function(err, item) {
-		res.send(item)
-	})
+	if(Object.keys(req.query).length > 0){
+		PostProfile.Ratings.findOne({email: req.query.email, title: req.query.title}, function(err, item) {
+			res.send(item)
+		})
+	}
+	else {
+		mongoose.model('ratedItems').find(function(err, ratedItems){
+			res.send(ratedItems)
+		})
+	}
+	
 })
 app.get('/similarusers', function(req, res){
-	console.log(req.query)
-	mongoose.model('userProfile').find(function(err, users){
-		console.log(users)
-	})
-	res.send('getting users ...')
+	if(typeof req.query.topic !== 'undefined') {
+		var _usrTopics = req.query.topic || undefined
+		var similarUsers = []
+		var matchUsers = []
+		mongoose.model('userProfile').find(function(err, users){
+			if(err){
+				console.log(err)
+			}
+			try {
+				var NONEmptyTopicUsers = users.filter(function(user) {
+					return user.topic.length > 0
+				})
+			} catch (error) {
+				console.log("error here")
+			}
+			// loop through current users with non empty topic and filtered users, 
+			// then find if any match is found
+			// refactor
+			if(typeof _usrTopics === 'object'){
+				for(var i = 0; i < NONEmptyTopicUsers.length; i++){
+					for(var x = 0; x < _usrTopics.length; x++){
+						if(NONEmptyTopicUsers[i].topic.indexOf(_usrTopics[x]) !== -1){
+							similarUsers.push(NONEmptyTopicUsers[i])
+							break
+						}
+					}
+				}
+			}
+			else {
+				for(var i = 0; i < NONEmptyTopicUsers.length; i++){
+					if(NONEmptyTopicUsers[i].topic.indexOf(_usrTopics) !== -1){
+						similarUsers.push(NONEmptyTopicUsers[i])
+					}
+				}
+			}
+			(function findBestSimilarity(){
+				for(var sim_= 0; sim_ < similarUsers.length; sim_++){
+					var formTarget = []
+					formTarget.push(similarUsers[sim_].topic.join())
+					var match = stringSimilarity.findBestMatch(_usrTopics.toString(), formTarget)
+					if(match.ratings[0].rating > 0.5){
+						matchUsers.push(similarUsers[sim_])
+					}
+				}
+			})()				
+			res.send(JSON.stringify(matchUsers))
+		})
+	}
 })

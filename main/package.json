@@ -4,7 +4,8 @@
   "description": "thesis research ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js -devmode -something 1"
   },
   "author": "Okojie Charles",
   "license": "ISC",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "browserify": "^14.4.0",
     "ng-dialog": "^1.0.1",
+    "nodemon": "^1.11.0",
     "string-similarity": "^1.2.0"
   }
 }
