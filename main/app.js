@@ -293,9 +293,12 @@ app.get('/similarusers', function(req, res){
 				for(var sim_= 0; sim_ < similarUsers.length; sim_++){
 					var formTarget = []
 					formTarget.push(similarUsers[sim_].topic.join())
+					similarUsers[sim_].similarity = ""
+					var copy = Object.assign({}, similarUsers[sim_]);
 					var match = stringSimilarity.findBestMatch(_usrTopics.toString(), formTarget)
-					if(match.ratings[0].rating > 0.5){
-						matchUsers.push(similarUsers[sim_])
+					if(match.ratings[0].rating > 0.5) {
+						copy.similarity = match.ratings[0].rating
+						matchUsers.push(copy)
 					}
 				}
 			})()				

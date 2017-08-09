@@ -31,7 +31,7 @@ function RecommendedStories (siteService, $http) {
 			siteService.getSimilarUser(getParams)
 			.then(function(response){
 				var similarUsers = response.data.filter(function (similarUser) {
-					return similarUser.email !== respUser.data.email
+					return similarUser._doc.email !== respUser.data.email
 				})
 				return similarUsers
 			})
@@ -42,8 +42,19 @@ function RecommendedStories (siteService, $http) {
 					method: "GET",
 					headers : {'Accept' : 'application/json'}
 				}).success(function(ratedItems){
-
-					console.log(ratedItems)
+					var finalARR = []
+					for(var i = 0; i < nearestNeighbour.length; i++){
+						var nearestNeigboursRating = ratedItems.filter(function(ratedItem) {
+							return ratedItem.email === nearestNeighbour[i].email
+						})
+						for(var x = 0; x < nearestNeigboursRating.length; x++) {
+							finalARR.push(nearestNeigboursRating[x])
+						}
+					}
+					function getItemPrediction() {
+						// loop through all items and get prediction value using collaborative filetring technique
+						// console.log(finalARR)
+					}
 				});
 			})
 		})
