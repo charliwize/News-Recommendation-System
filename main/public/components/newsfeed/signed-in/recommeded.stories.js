@@ -36,7 +36,10 @@ function RecommendedStories (siteService, $http) {
 				return similarUsers
 			})
 			.then(function(nearestNeighbour){
-				console.log(nearestNeighbour)
+				var summedSimilarity = 0
+				for(var x = 0; x < nearestNeighbour.length; x++){
+					summedSimilarity += nearestNeighbour[x].similarity
+				}
 				$http({
 					url: 'http://localhost:8081/ratedstories/', 
 					method: "GET",
@@ -45,7 +48,7 @@ function RecommendedStories (siteService, $http) {
 					var finalARR = []
 					for(var i = 0; i < nearestNeighbour.length; i++){
 						var nearestNeigboursRating = ratedItems.filter(function(ratedItem) {
-							return ratedItem.email === nearestNeighbour[i].email
+							return ratedItem.email === nearestNeighbour[i]._doc.email
 						})
 						for(var x = 0; x < nearestNeigboursRating.length; x++) {
 							finalARR.push(nearestNeigboursRating[x])
@@ -53,8 +56,32 @@ function RecommendedStories (siteService, $http) {
 					}
 					function getItemPrediction() {
 						// loop through all items and get prediction value using collaborative filetring technique
-						// console.log(finalARR)
+						for (var i = 0; i < finalARR.length; i++){
+							nearestNeighbour.forEach(function(element) {
+								if(element._doc.email == finalARR[i].email){
+									finalARR[i].similarity = element.similarity.toFixed(2)
+								}
+							}, this);
+							var Rv_i = finalARR.filter(function (item) {
+								return item.title == finalARR[i].title
+							});
+							//error : returning two results from 2 rated users
+							// : closure
+							(function eachPrediction() {
+								var Esum = 0
+								Rv_i.forEach(function(element) {
+									if(typeof element.similarity !== 'undefined'){
+										Esum += element.rating * element.similarity
+									}
+								}, this);
+								var predictions = Esum / summedSimilarity
+								var finalPredictionValue = predictions.toFixed(2)
+								console.log(Rv_i)
+								console.log(finalPredictionValue)
+							})()
+						}
 					}
+					getItemPrediction()
 				});
 			})
 		})

@@ -14,14 +14,19 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-xs-3 news-width" ng-if="$index != 0;" data-ng-repeat="article in $ctrl.articles | orderBy: '-date_published'">
-			<a ng-href="/story/{{article._id}}/">
-				<div style="max-height: 170px">
-					<img ng-src="{{article.lead_image_url}}" style="width: 100%; height:140px" />
-				</div>
-				<div ng-bind="article.title" class="article-title"></div>
-				<div ng-bind="article.excerpt" class="excerpt-text"></div>
-			</a>
+		<div class="col-md-9">
+			<div class="col-xs-3 news-width" ng-if="$index != 0;" data-ng-repeat="article in $ctrl.articles | orderBy: '-date_published'">
+				<a ng-href="/story/{{article._id}}/">
+					<div style="max-height: 170px">
+						<img ng-src="{{article.lead_image_url}}" style="width: 100%; height:140px" />
+					</div>
+					<div ng-bind="article.title" class="article-title"></div>
+					<div ng-bind="article.excerpt" class="excerpt-text"></div>
+				</a>
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div><h5>Other Users Also Read</h5></div>
 		</div>
 	</div>
 </div>
