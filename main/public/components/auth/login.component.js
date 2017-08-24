@@ -22,7 +22,9 @@ function LoginCtrl ($http, $location, $cookies) {
 			if(d.email == ctrl.user.email && d.password == ctrl.user.password){
 		        var currentUser = {
 		          email: ctrl.user.email,
-		          password: ctrl.user.password
+				  password: ctrl.user.password,
+				  professionCategory: d.professionCategory,
+				  profession: d.profession
 		        }
 				$cookies.putObject('user', currentUser)
 				$location.path('/')

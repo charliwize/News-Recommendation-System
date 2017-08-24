@@ -1,14 +1,23 @@
 <div style="margin:auto">
 	<div class="row" style="margin: 40px; height: 390px">
-		<a ng-href="/story/{{$ctrl.articles._id}}/">
+		<a ng-href="/story/{{$ctrl.articles[$ctrl.random]._id}}/">
 			<div class="col-md-9">
 				<div>
-					<img ng-src="{{$ctrl.articles[0].lead_image_url}}" style="width: 100%; height: 390px" />
+					<img ng-src="{{$ctrl.articles[$ctrl.random].lead_image_url}}" style="width: 100%; height: 390px" />
 				</div>
 			</div>
 			<div class="col-md-3" style="background: #951c55; color: #fff; height: 100%">
-				<h3><div ng-bind="$ctrl.articles.slice(-1)[0].title" class="article-title"></div></h3>
-				<div ng-bind="$ctrl.articles[0].excerpt" class="excerpt-text"></div>
+				<h3><div ng-bind="$ctrl.articles[$ctrl.random].title" class="article-title"></div></h3>
+				<div class="excerpt-text" ng-if="$ctrl.articles[$ctrl.random].source">
+					<span>Source:</span>
+					<span ng-bind="$ctrl.articles[$ctrl.random].source"></span>
+				</div>
+				<div class="excerpt-text" ng-if="$ctrl.articles[$ctrl.random].author">
+					<span>Author:</span>
+					<span ng-bind="$ctrl.articles[$ctrl.random].author"></span>
+				</div>
+				<br/>
+				<div ng-bind="$ctrl.articles[$ctrl.random].excerpt" class="excerpt-text"></div>
 			</div>
 		</a>
 	</div>

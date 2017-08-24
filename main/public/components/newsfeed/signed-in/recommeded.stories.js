@@ -36,50 +36,83 @@ function RecommendedStories (siteService, $http) {
 				return similarUsers
 			})
 			.then(function(nearestNeighbour){
+				// console.log(nearestNeighbour)
+				
 				var summedSimilarity = 0
 				for(var x = 0; x < nearestNeighbour.length; x++){
 					summedSimilarity += nearestNeighbour[x].similarity
 				}
+				summedSimilarity = summedSimilarity.toFixed(2)
 				$http({
 					url: 'http://localhost:8081/ratedstories/', 
 					method: "GET",
 					headers : {'Accept' : 'application/json'}
-				}).success(function(ratedItems){
-					var finalARR = []
+				})
+				.success(function(ratedItems){
+					var neighboursRatedItems = []
 					for(var i = 0; i < nearestNeighbour.length; i++){
-						var nearestNeigboursRating = ratedItems.filter(function(ratedItem) {
-							return ratedItem.email === nearestNeighbour[i]._doc.email
+						
+						var nearestNeigboursRatedItems = ratedItems.filter(function(ratedItem) {
+							return ratedItem.email === nearestNeighbour[i]._doc.email							
 						})
-						for(var x = 0; x < nearestNeigboursRating.length; x++) {
-							finalARR.push(nearestNeigboursRating[x])
+						/**
+						 * finalArr list contains all nearest neighbours for current user
+						 */
+						for(var x = 0; x < nearestNeigboursRatedItems.length; x++) {
+							neighboursRatedItems.push(nearestNeigboursRatedItems[x])
 						}
 					}
+					// loop through all items and get prediction value using collaborative filtering technique
 					function getItemPrediction() {
-						// loop through all items and get prediction value using collaborative filetring technique
-						for (var i = 0; i < finalARR.length; i++){
+						for (var i = 0; i < neighboursRatedItems.length; i++){
 							nearestNeighbour.forEach(function(element) {
-								if(element._doc.email == finalARR[i].email){
-									finalARR[i].similarity = element.similarity.toFixed(2)
+								if(element._doc.email == neighboursRatedItems[i].email){
+									neighboursRatedItems[i].similarity = element.similarity.toFixed(2)
 								}
 							}, this);
-							var Rv_i = finalARR.filter(function (item) {
-								return item.title == finalARR[i].title
-							});
-							//error : returning two results from 2 rated users
-							// : closure
-							(function eachPrediction() {
-								var Esum = 0
-								Rv_i.forEach(function(element) {
-									if(typeof element.similarity !== 'undefined'){
-										Esum += element.rating * element.similarity
-									}
-								}, this);
-								var predictions = Esum / summedSimilarity
-								var finalPredictionValue = predictions.toFixed(2)
-								console.log(Rv_i)
-								console.log(finalPredictionValue)
-							})()
 						}
+						
+						
+						// console.log(Rv_i);
+						//error : Rv_i returns two results from 2 rated items
+						// : closure
+						(function eachPrediction() {
+							var Esum = 0
+							var userBasedF = []
+							ctrl.recommendedItems = []
+							var finalObj = {
+								predictionValue: null,
+								story: null
+							}
+							neighboursRatedItems.forEach(function(element) {
+								var clonedObj = Object.create(finalObj)
+								if(typeof element.similarity !== 'undefined'){
+									
+									Esum = element.rating * element.similarity
+									// ...normalize the sum of the product of ratings and similarities
+									var similaritiesRatingsSum = ((Esum - 0) / (5-0)).toFixed(2);
+									var predictions = (similaritiesRatingsSum / summedSimilarity).toFixed(2)
+									clonedObj.predictionValue = predictions
+									clonedObj.story = element
+									
+									// similarityWithContent
+									userBasedF.push(clonedObj)
+								}
+							}, this);
+							for(var i = 0; i < userBasedF.length; i++){
+								
+								// check nearest neighbour similarity with content and add/remove PSV value
+								if(userBasedF[i].story.similarityWithContent > 0.5 && userBasedF[i].story.rating > 2){
+									userBasedF[i].predictionValue = userBasedF[i].predictionValue + 0.25
+								}
+								else if (userBasedF[i].story.similarityWithContent > 0.5 && userBasedF[i].story.rating < 3){
+									userBasedF[i].predictionValue = userBasedF[i].predictionValue - 0.25
+								}
+								if(userBasedF[i].predictionValue > 0.5) {
+									ctrl.recommendedItems.push(userBasedF[i])
+								}
+							}
+						})()
 					}
 					getItemPrediction()
 				});

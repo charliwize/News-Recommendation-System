@@ -11,7 +11,6 @@ function newsDetailController($http, ngDialog, $scope, $routeParams, siteService
 
 	//get current user logged in and save the user's rating value 
 	ctrl.currentUser = ctrl.user;
-	console.log(ctrl.user)
 	ctrl.$onInit = function(){
 		$http.get('http://localhost:8081/api/' + $routeParams.id).success(function(data){
 			ctrl.categories = [];
@@ -43,7 +42,7 @@ function newsDetailController($http, ngDialog, $scope, $routeParams, siteService
     	ctrl.percent = 100 * (value / ctrl.max);
   	};
   	ctrl.clickOn = function(value){
-  		console.log(value, ctrl.currentUser.email, ctrl.article.title, ctrl.article.url)
+		console.log(ctrl.currentUser)
   		$http({
 			url: 'http://localhost:8081/ratedstories/', 
 			method: 'PUT',
@@ -51,7 +50,12 @@ function newsDetailController($http, ngDialog, $scope, $routeParams, siteService
 				email: ctrl.currentUser.email,
 				title: ctrl.article.title,
 				url: ctrl.article.url,
-				rating: value
+				lead_image_url: ctrl.article.lead_image_url,
+				rating: value,
+				id: ctrl.article._id,
+				categories: ctrl.categories,
+				professionCategory: ctrl.currentUser.professionCategory
+
 			},
 			headers: {'Content-Type': 'application/json'}
 		})

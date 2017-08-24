@@ -166,3 +166,8 @@ button{
     border-radius: 0px;
     padding: 7px;
 }
+.user-recommend-stories{
+	margin-top: 5px;
+	border-top: 1px solid #666;
+	padding-top: 6px
+}

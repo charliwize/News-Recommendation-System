@@ -57,6 +57,7 @@ function HeaderCtrl($http, $scope, siteService, ngDialog, $cookies) {
 
 					function submitPreferences(){
 						if($scope.user !== ""){
+							ctrl.user.profession = $scope.userProfession
 							$scope.respUser.profession = $scope.userProfession;
 							$scope.respUser.topic = $scope.userTopics
 			    			$http({
@@ -66,7 +67,8 @@ function HeaderCtrl($http, $scope, siteService, ngDialog, $cookies) {
 						    	headers: {'Content-Type': 'application/json'}
 							})
 							.success(function(d){
-								console.log(d)
+								ctrl.user.professionCategory = d.professionCategory
+								$cookies.putObject('user', ctrl.user)
 							})
 			    		}
 			    		else{
