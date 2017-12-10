@@ -11,6 +11,7 @@ angular.module('showstories')
 function HeaderCtrl($http, $scope, siteService, ngDialog, $cookies) {
 	var ctrl = this;
 	ctrl.user = $cookies.getObject('user')
+	console.log(ctrl.user)
 	if(typeof ctrl.user !== 'undefined'){
 		ctrl.config = {
 			params: { email: ctrl.user.email, password: ctrl.user.password },

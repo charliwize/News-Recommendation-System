@@ -48,9 +48,9 @@ app.get('/create', function(req, res, next) {
 
 var api = [
 	// 'https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=entertainment-weekly&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe'
+	// 'https://newsapi.org/v1/articles?source=entertainment-weekly&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
 	// 'https://newsapi.org/v1/articles?source=the-lad-bible&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=national-geographic&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe'
+	// 'https://newsapi.org/v1/articles?source=national-geographic&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
 	// 'https://newsapi.org/v1/articles?source=recode&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
 	// 'https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
 	// 'https://newsapi.org/v1/articles?source=the-economist&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
@@ -86,42 +86,42 @@ var api = [
 // 					}			  
 // 					else{
 
-					/*
-						IBM NLU analyzes aggregated stories
-					*/
-						// natural_language_understanding.analyze(parameters, function(err, NLUAnalyzed) {
-						// 	if (err){
-						// 		console.log('error:', err);
-						// 	}
-						// 	else{
-						// 		/*
-						// 			Analyzed stories are saved to DB
-						// 		*/
-						// 		var newNews = new PostProfile.News({
-						// 			title: data.title,
-						// 			author: data.author,
-						// 			source: response.source,
-						// 			content: data.content,
-						// 			date_published: data.date_published,
-						// 			lead_image_url: data.lead_image_url,
-						// 			domain: data.domain,
-						// 			url: data.url,
-						// 			excerpt: data.excerpt,
-						// 			category: NLUAnalyzed.categories[0]
-						// 		})
-						// 		newNews.save(function(err, post){
-						// 			if(err){ 
-						// 				Object.keys(err.errors).forEach(function(key) {
-						// 					var message = err.errors[key].message;
-						// 					console.log('Validation error for "%s": %s', key, message);
-						// 				});
-						// 			}
-						// 			else if(post){
-						// 				// post sucessful
-						// 			}
-						// 		})
-						// 	}
-						// });
+// 					/*
+// 						IBM NLU analyzes aggregated stories
+// 					*/
+// 						natural_language_understanding.analyze(parameters, function(err, NLUAnalyzed) {
+// 							if (err){
+// 								console.log('error:', err);
+// 							}
+// 							else{
+// 								/*
+// 									Analyzed stories are saved to DB
+// 								*/
+// 								var newNews = new PostProfile.News({
+// 									title: data.title,
+// 									author: data.author,
+// 									source: response.source,
+// 									content: data.content,
+// 									date_published: data.date_published,
+// 									lead_image_url: data.lead_image_url,
+// 									domain: data.domain,
+// 									url: data.url,
+// 									excerpt: data.excerpt,
+// 									category: NLUAnalyzed.categories[0]
+// 								})
+// 								newNews.save(function(err, post){
+// 									if(err){ 
+// 										Object.keys(err.errors).forEach(function(key) {
+// 											var message = err.errors[key].message;
+// 											console.log('Validation error for "%s": %s', key, message);
+// 										});
+// 									}
+// 									else if(post){
+// 										// post sucessful
+// 									}
+// 								})
+// 							}
+// 						});
 // 					} 
 // 				});
 // 			}
