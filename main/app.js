@@ -47,90 +47,90 @@ app.get('/create', function(req, res, next) {
 });
 
 var api = [
-	// 'https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=entertainment-weekly&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=the-lad-bible&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=national-geographic&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=recode&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=the-economist&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=espn&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=cnn&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=al-jazeera-english&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
-	// 'https://newsapi.org/v1/articles?source=independent&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe'
+	'https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=entertainment-weekly&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=the-lad-bible&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=national-geographic&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=recode&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=bbc-news&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=the-economist&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=espn&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=cnn&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=al-jazeera-english&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe',
+	'https://newsapi.org/v1/articles?source=independent&sortBy=top&apiKey=8b92c4aef2e643c3a7ab030a65ff4afe'
 ] 
-// getStories.makeAPIRequest(api, function(response){
-// 	console.log(response)
-//     response.articles.forEach(function(item){
-//    		if (item.hasOwnProperty('web_url') || item.hasOwnProperty('webUrl'))  {
-// 	        item['url'] = item['web_url'] || item['webUrl'];
-// 	        delete item['web_url'];
-// 	        delete item['webUrl'];
-//     	}
-//     	mc.parse(item.url)
-// 		.then(function(data){
-// 			if(data.content !== 'undefined' || data.content !== '' || data.content !== null){
-// 				var parameters = {
-// 					'html': data.content,
-// 					'features': {
-// 						'categories': {}
-// 					}
-// 				}
-// 				PostProfile.News.findOne({title: data.title}, function(err, item) {
-// 					if(item){
-// 						app.get('/newsapi', function(req, res){
-// 							mongoose.model('aggregateNews').find(function(err, news){
-// 								res.send(news)
-// 							})
-// 						})
-// 					}			  
-// 					else{
+getStories.makeAPIRequest(api, function(response){
+	console.log(response)
+    response.articles.forEach(function(item){
+   		if (item.hasOwnProperty('web_url') || item.hasOwnProperty('webUrl'))  {
+	        item['url'] = item['web_url'] || item['webUrl'];
+	        delete item['web_url'];
+	        delete item['webUrl'];
+    	}
+    	mc.parse(item.url)
+		.then(function(data){
+			if(data.content !== 'undefined' || data.content !== '' || data.content !== null){
+				var parameters = {
+					'html': data.content,
+					'features': {
+						'categories': {}
+					}
+				}
+				PostProfile.News.findOne({title: data.title}, function(err, item) {
+					if(item){
+						app.get('/newsapi', function(req, res){
+							mongoose.model('aggregateNews').find(function(err, news){
+								res.send(news)
+							})
+						})
+					}			  
+					else{
 
-// 					/*
-// 						IBM NLU analyzes aggregated stories
-// 					*/
-// 						natural_language_understanding.analyze(parameters, function(err, NLUAnalyzed) {
-// 							if (err){
-// 								console.log('error:', err);
-// 							}
-// 							else{
-// 								/*
-// 									Analyzed stories are saved to DB
-// 								*/
-// 								var newNews = new PostProfile.News({
-// 									title: data.title,
-// 									author: data.author,
-// 									source: response.source,
-// 									content: data.content,
-// 									date_published: data.date_published,
-// 									lead_image_url: data.lead_image_url,
-// 									domain: data.domain,
-// 									url: data.url,
-// 									excerpt: data.excerpt,
-// 									category: NLUAnalyzed.categories[0]
-// 								})
-// 								newNews.save(function(err, post){
-// 									if(err){ 
-// 										Object.keys(err.errors).forEach(function(key) {
-// 											var message = err.errors[key].message;
-// 											console.log('Validation error for "%s": %s', key, message);
-// 										});
-// 									}
-// 									else if(post){
-// 										// post sucessful
-// 									}
-// 								})
-// 							}
-// 						});
-// 					} 
-// 				});
-// 			}
-// 		})
-// 		.catch(function () {
-// 		     console.log("Error: mercury.postlight.com mercury.postlight.com");
-// 		});
-// 	})
-// })
+					/*
+						IBM NLU analyzes aggregated stories
+					*/
+						natural_language_understanding.analyze(parameters, function(err, NLUAnalyzed) {
+							if (err){
+								console.log('error:', err);
+							}
+							else{
+								/*
+									Analyzed stories are saved to DB
+								*/
+								var newNews = new PostProfile.News({
+									title: data.title,
+									author: data.author,
+									source: response.source,
+									content: data.content,
+									date_published: data.date_published,
+									lead_image_url: data.lead_image_url,
+									domain: data.domain,
+									url: data.url,
+									excerpt: data.excerpt,
+									category: NLUAnalyzed.categories[0]
+								})
+								newNews.save(function(err, post){
+									if(err){ 
+										Object.keys(err.errors).forEach(function(key) {
+											var message = err.errors[key].message;
+											console.log('Validation error for "%s": %s', key, message);
+										});
+									}
+									else if(post){
+										// post sucessful
+									}
+								})
+							}
+						});
+					} 
+				});
+			}
+		})
+		.catch(function () {
+		     console.log("Error: mercury.postlight.com mercury.postlight.com");
+		});
+	})
+})
 
 app.get('/newsapi', function(req, res){
 	mongoose.model('aggregateNews').find(function(err, news){
